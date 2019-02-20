@@ -1,7 +1,17 @@
 <?php
 
-$sender = $_POST["sender"];
-$text = $_POST["body"];
+if(isset($_POST["sender"])){
+    $sender = $_POST["sender"];
+    $text = $_POST["body"];
+}else{
+    /**
+    * Test
+    */
+    $sender = '027777777';
+    
+}
+
+
 
 if($sender == 'KBank'){
     $messageKBANK_01 = '08/01/62 22:59 บชX153594X เงินเข้า500.00บ';
@@ -9,7 +19,7 @@ if($sender == 'KBank'){
     kbank($messageKBANK_01);
     
 }elseif($sender == '027777777'){
-    
+  
     $message = '08/09@10:46 100.00 โอนจากPHUCHONG SONGเข้าx354011 ใช้ได้2,375.46บ';
     scb($message);
     
@@ -19,6 +29,7 @@ if($sender == 'KBank'){
     ktb($message);
     
 }elseif($sender == 'TMBBank'){
+    
     $message = 'มีเงิน 100.00บ.เข้าบ/ชxx4484เหลือ 500.00 บ.09/09/18@15:16';
     tmb($message);
 }
@@ -79,7 +90,34 @@ function kbank($message){
 * SCB
 */
 function scb($message){
-    
+   
+    if( stripos($message , "เข้าx354011")	!= null )
+    {
+
+        $date_come_year = date('Y');
+        $text_explode = explode(" ",$message);
+        
+        $text_explode_date_time = explode("@",$text_explode[0]);
+        $text_explode_date = explode("/",$text_explode_date_time[0]); 	
+        $date_day=$text_explode_date[0];			
+        $date_mon=$text_explode_date[1];	
+        $date_year=$date_come_year;
+        $text_explode_time = explode(":",$text_explode_date_time[1]);  
+        $time_hour=$text_explode_time[0]; 		$time_min=$text_explode_time[1];
+        
+        $date_format = $date_mon."/".$date_day."/".$date_year;
+        $date_strto=strtotime($date_format);
+        
+        $cut_word = array(	'บ'	=> "" 	,	','	=> "");
+        $pay = strtr($text_explode[1],$cut_word);
+        
+        $data = [
+            'date' => $date_format,
+            'time' =>  $time_hour.':'. $time_min,
+            'total' => $pay
+        ];
+        print_r($data);
+    }	
 }
 /**
 * KTB
