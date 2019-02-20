@@ -64,15 +64,15 @@ function kbank($message){
         
         $text_explode = explode(" ",$message);
         $text_explode_date = explode("/",$text_explode[0]); 	
-        $date_day=$text_explode_date[0];			
-        $date_mon=$text_explode_date[1];	
-        $date_year=$text_explode_date[2]+1957;
+        $date_day = $text_explode_date[0];			
+        $date_mon = $text_explode_date[1];	
+        $date_year = $text_explode_date[2]+1957;
         $text_explode_time = explode(":",$text_explode[1]);  
-        $time_hour=$text_explode_time[0]; 		
-        $time_min=$text_explode_time[1];
+        $time_hour = $text_explode_time[0]; 		
+        $time_min = $text_explode_time[1];
         
         $date_format = $date_mon."/".$date_day."/".$date_year;
-        $date_strto=strtotime($date_format);
+        $date_strto = strtotime($date_format);
         
         $cut_word = array(	'บ'	=> "" 	,	','	=> "");
         $pay = strtr($text_explode[4],$cut_word);
@@ -99,11 +99,11 @@ function scb($message){
         
         $text_explode_date_time = explode("@",$text_explode[0]);
         $text_explode_date = explode("/",$text_explode_date_time[0]); 	
-        $date_day=$text_explode_date[0];			
-        $date_mon=$text_explode_date[1];	
-        $date_year=$date_come_year;
+        $date_day = $text_explode_date[0];			
+        $date_mon = $text_explode_date[1];	
+        $date_year = $date_come_year;
         $text_explode_time = explode(":",$text_explode_date_time[1]);  
-        $time_hour=$text_explode_time[0]; 		$time_min=$text_explode_time[1];
+        $time_hour = $text_explode_time[0]; 		$time_min=$text_explode_time[1];
         
         $date_format = $date_mon."/".$date_day."/".$date_year;
         $date_strto=strtotime($date_format);
